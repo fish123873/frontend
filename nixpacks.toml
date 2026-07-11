@@ -1,0 +1,15 @@
+# Fallback build config for EasyPanel when it uses Nixpacks instead of the Dockerfile.
+# With this file present, the app builds and runs correctly regardless of which
+# build method EasyPanel selects.
+
+[phases.setup]
+nixPkgs = ["nodejs_20"]
+
+[phases.install]
+cmds = ["npm ci"]
+
+[phases.build]
+cmds = ["npm run build"]
+
+[start]
+cmd = "node_modules/.bin/next start -H 0.0.0.0 -p ${PORT:-3000}"
