@@ -4,7 +4,11 @@ import { isWhitelistedPhone } from '@/lib/utils/phone-validation'
 const BACKEND_API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'https://api.lumarahealth.shop'
 const MAXMIND_ACCOUNT_ID = process.env.MAXMIND_ACCOUNT_ID
 const MAXMIND_LICENSE_KEY = process.env.MAXMIND_LICENSE_KEY
-const MAXMIND_ENABLED = process.env.MAXMIND_ENABLED !== 'false'
+// Default: DISABLED. Only activate when both credentials AND MAXMIND_ENABLED=true are set.
+const MAXMIND_ENABLED =
+  process.env.MAXMIND_ENABLED === 'true' &&
+  !!process.env.MAXMIND_ACCOUNT_ID &&
+  !!process.env.MAXMIND_LICENSE_KEY
 const RISK_SCORE_THRESHOLD = Number(process.env.MAXMIND_RISK_THRESHOLD ?? '75')
 
 function getClientIp(req: NextRequest): string {
